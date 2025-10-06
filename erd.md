@@ -70,7 +70,7 @@ ERD ini dibuat sesederhana mungkin agar mudah dipahami oleh siswa SMK. Berdasark
 * **Pesanan** memiliki banyak **Detail Pesanan** → (*1 ke banyak*)
 * **Menu** dapat muncul di banyak **Detail Pesanan** → (*1 ke banyak*)
 * **Pesanan** memiliki satu **Pembayaran** → (*1 ke 1*)
-* **User Resto** dapat mengelola banyak **Pesanan** (opsional) → (*1 ke banyak*)
+* **User Resto** dapat mengelola banyak **Pesanan** → (*1 ke banyak*)
 
 ---
 
@@ -79,7 +79,7 @@ ERD ini dibuat sesederhana mungkin agar mudah dipahami oleh siswa SMK. Berdasark
 ```
 Menu (1)───<(Detail Pesanan)>───(1) Pesanan ───(1) Pembayaran
                                             
-Pesanan (N)───< User Resto (opsional)
+Pesanan (N)───< User Resto
 ```
 
 ---
