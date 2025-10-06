@@ -58,7 +58,9 @@
                 <div><strong>Nasi Goreng</strong></div>
                 <div class="small">Rp 18.000</div>
               </div>
-              <div><button onclick="addItem('Nasi Goreng',18000)">Tambah (+)</button></div>
+              <div>
+                <input type="number" id="qtyNasiGoreng" value="0" />
+              </div>
             </div>
             <div class="menu-item">
               <div>
@@ -66,7 +68,9 @@
                 <div><strong>Mie Ayam</strong></div>
                 <div class="small">Rp 15.000</div>
               </div>
-              <div><button onclick="addItem('Mie Ayam',15000)">Tambah (+)</button></div>
+              <div>
+                <input type="number" id="qtyMieAyam" value="0" />
+              </div>
             </div>
             <div class="menu-item">
               <div>
@@ -74,14 +78,16 @@
                 <div><strong>Es Teh</strong></div>
                 <div class="small">Rp 5.000</div>
               </div>
-              <div><button onclick="addItem('Es Teh',5000)">Tambah (+)</button></div>
+              <div>
+                <input type="number" id="qtyEsTeh" value="0" />
+              </div>
             </div>
           </div>
         </div>
 
         <div class="col cart">
-          <h3>Keranjang</h3>
-          <div id="cartList" class="small">(Kosong)</div>
+          {{-- <h3>Keranjang</h3> --}}
+          <div id="cartList" style="display: none;" class="small">(Kosong)</div>
           <div style="margin-top:12px">
             <label>Nama</label>
             <input id="custName" type="text" placeholder="Masukkan nama" style="margin-bottom:12px" />
@@ -137,7 +143,7 @@
     <!-- STATUS PAGE -->
     <section id="status" class="card hidden">
       <h2>Status Pesanan</h2>
-      <div style="margin-bottom:12px">
+      <div id="formStatus" style="margin-bottom:12px">
         <label>Nomor Pesanan</label>
         <input id="orderNo" type="text" placeholder="Masukkan nomor" />
         <div style="margin-top:8px"><button onclick="checkStatus()">Cari</button></div>
@@ -161,6 +167,9 @@
     function go(p){ pages.forEach(id=>document.getElementById(id).classList.add('hidden')); document.getElementById(p).classList.remove('hidden'); renderCart(); }
 
     function addItem(name,price){ const found = state.cart.find(i=>i.name===name); if(found) found.qty++; else state.cart.push({name,price,qty:1}); renderCart(); }
+
+    addItem('Nasi Goreng',18000);addItem('Mie Ayam',15000);addItem('Es Teh',5000)
+
     function renderCart(){ const el=document.getElementById('cartList'); if(state.cart.length===0) el.innerText='(Kosong)'; else el.innerHTML=state.cart.map(i=>`${i.name} x${i.qty} — Rp ${i.price*i.qty}`).join('<br>');
       const total = state.cart.reduce((s,i)=>s+i.price*i.qty,0); document.getElementById('totalAmt') && (document.getElementById('totalAmt').innerText='Rp '+total);
       document.getElementById('reviewList') && (document.getElementById('reviewList').innerHTML = state.cart.length? state.cart.map(i=>`<div>${i.name} — ${i.qty} x Rp ${i.price} = Rp ${i.price*i.qty}</div>`).join('') : '(Tidak ada item)'); }
@@ -173,7 +182,7 @@
 
     function confirmPayment(didPay){ if(!didPay){ alert('Silakan selesaikan pembayaran.'); return; } state.orderId = 'ORD'+Math.floor(Math.random()*9000+1000); go('success'); }
     function resetAll(){ state.cart=[]; state.orderId=null; document.getElementById('custName').value=''; document.getElementById('tableNo').value=''; go('start'); }
-    function checkStatus(){ const id=document.getElementById('orderNo').value||state.orderId; if(!id){ alert('Masukkan nomor pesanan atau pesan dulu.'); return; } document.getElementById('statusInfo').classList.remove('hidden'); }
+    function checkStatus(){ const id=document.getElementById('orderNo').value||state.orderId; if(!id){ alert('Masukkan nomor pesanan atau pesan dulu.'); return; } document.getElementById('statusInfo').classList.remove('hidden'); document.getElementById('formStatus').classList.add('hidden'); }
 
     // initial
     go('start');
