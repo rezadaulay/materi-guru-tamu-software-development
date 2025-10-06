@@ -54,7 +54,7 @@ ERD ini dibuat sesederhana mungkin agar mudah dipahami oleh siswa SMK. Berdasark
 
 ---
 
-#### 5. **User (Dapur/Waitress)** *(opsional)*
+#### 5. **User (Dapur/Waitress)**
 
 | Field    | Tipe Data                        | Keterangan                |
 | -------- | -------------------------------- | ------------------------- |
