@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Wireframe - Sisi Dapur / Memasak</title>
+  <style>
+    body{font-family:Arial,Helvetica,sans-serif;margin:0;padding:20px}
+    .frame{max-width:900px;margin:0 auto}
+    .card{border:2px solid #333;padding:16px;margin:12px 0}
+    .table{width:100%;border-collapse:collapse}
+    th,td{border:1px dashed #333;padding:8px;text-align:left;font-size:14px}
+    th{background:#eee}
+    button{padding:6px 10px;border:2px solid #333;background:transparent;cursor:pointer}
+    .hidden{display:none}
+    .small{font-size:13px;color:#555}
+    header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <header>
+      <h1>Dapur - Wireframe</h1>
+      <div class="small">Low Fidelity</div>
+    </header>
+
+    <!-- LOGIN -->
+    <section id="login" class="card">
+      <h2>Login Staf Dapur</h2>
+      <label>Username</label><br>
+      <input type="text" style="width:98%;padding:6px;border:2px dashed #333"><br><br>
+      <label>Password</label><br>
+      <input type="password" style="width:98%;padding:6px;border:2px dashed #333"><br><br>
+      <button onclick="go('list')">Masuk</button>
+    </section>
+
+    <!-- DAFTAR PESANAN MASUK -->
+    <section id="list" class="card hidden">
+      <h2>Pesanan Masuk</h2>
+      <table class="table">
+        <thead>
+          <tr><th>No Meja</th><th>Menu</th><th>Total</th><th>Status</th><th>Aksi</th></tr>
+        </thead>
+        <tbody id="orderTable"></tbody>
+      </table>
+    </section>
+
+    <!-- DETAIL PESANAN -->
+    <section id="detail" class="card hidden">
+      <h2>Detail Pesanan</h2>
+      <div id="orderInfo" class="small"></div>
+      <div style="margin-top:12px">
+        <button onclick="updateStatus('processing')">Mulai Proses</button>
+        <button onclick="updateStatus('done')">Selesai</button>
+        <button onclick="go('list')">Kembali</button>
+      </div>
+    </section>
+
+    <!-- RIWAYAT PESANAN -->
+    <section id="history" class="card hidden">
+      <h2>Riwayat Pesanan</h2>
+      <table class="table">
+        <thead><tr><th>No Meja</th><th>Menu</th><th>Waktu</th><th>Status</th></tr></thead>
+        <tbody id="historyTable"></tbody>
+      </table>
+      <div style="margin-top:12px"><button onclick="go('list')">Kembali ke Daftar</button></div>
+    </section>
+
+  </div>
+
+  <script>
+    const pages=['login','list','detail','history'];
+    const orders=[
+      {id:1,table:'05',menu:'Nasi Goreng, Es Teh',total:23000,status:'Baru'},
+      {id:2,table:'07',menu:'Mie Ayam',total:15000,status:'Baru'}
+    ];
+    const history=[];
+    let currentOrder=null;
+
+    function go(p){ pages.forEach(id=>document.getElementById(id).classList.add('hidden')); document.getElementById(p).classList.remove('hidden'); if(p==='list') renderOrders(); if(p==='history') renderHistory(); }
+
+    function renderOrders(){
+      const tb=document.getElementById('orderTable');
+      tb.innerHTML=orders.map(o=>`<tr><td>${o.table}</td><td>${o.menu}</td><td>Rp ${o.total}</td><td>${o.status}</td><td><button onclick=\"viewDetail(${o.id})\">Proses</button></td></tr>`).join('');
+    }
+
+    function viewDetail(id){ currentOrder=orders.find(o=>o.id===id); go('detail'); document.getElementById('orderInfo').innerHTML=`<div>No Meja: ${currentOrder.table}</div><div>Menu: ${currentOrder.menu}</div><div>Total: Rp ${currentOrder.total}</div><div>Status: ${currentOrder.status}</div>`; }
+
+    function updateStatus(status){ if(!currentOrder)return; if(status==='processing'){ currentOrder.status='Diproses'; alert('Pesanan sedang dimasak'); go('list'); renderOrders(); }
+      else if(status==='done'){ currentOrder.status='Selesai'; history.push({...currentOrder,time:new Date().toLocaleTimeString()}); const idx=orders.findIndex(o=>o.id===currentOrder.id); orders.splice(idx,1); alert('Pesanan selesai dimasak'); go('list'); renderOrders(); }
+    }
+
+    function renderHistory(){ const tb=document.getElementById('historyTable'); tb.innerHTML=history.map(h=>`<tr><td>${h.table}</td><td>${h.menu}</td><td>${h.time}</td><td>${h.status}</td></tr>`).join('') || '<tr><td colspan=4>(Belum ada riwayat)</td></tr>'; }
+
+    // init
+    go('login');
+  </script>
+</body>
+</html>

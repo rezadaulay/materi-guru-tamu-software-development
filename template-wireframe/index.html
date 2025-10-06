@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Wireframe - Self Order (Low Fidelity)</title>
+  <style>
+    /* Very simple wireframe CSS - kotak kotak, garis */
+    :root{font-family: Arial, Helvetica, sans-serif}
+    body{margin:0;padding:20px;background:#fff;color:#111}
+    .frame{max-width:900px;margin:0 auto}
+    header{display:flex;align-items:center;justify-content:space-between}
+    .logo{border:2px dashed #333;padding:12px 20px;font-weight:700}
+    .card{border:2px solid #333;padding:16px;margin:12px 0}
+    .row{display:flex;gap:12px}
+    .col{flex:1}
+    button{padding:8px 12px;border:2px solid #333;background:transparent;cursor:pointer}
+    .ghost{border:2px dashed #777;padding:8px;text-align:center}
+    .menu-item{display:flex;justify-content:space-between;align-items:center;padding:8px;border-bottom:1px dashed #ccc}
+    .menu-item:last-child{border-bottom:none}
+    .small{font-size:13px;color:#555}
+    .hidden{display:none}
+    .cart{border-left:2px dashed #333;padding-left:12px}
+    input[type=text]{width:97%;padding:8px;border:2px dashed #777}
+    .center{text-align:center}
+    .status-step{display:flex;gap:8px;align-items:center;padding:8px 0}
+    .progress{height:10px;background:#eee;border:2px dashed #ccc}
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <header>
+      <div class="logo">MIE JAGOAN</div>
+      <div class="small">Wireframe Low-Fidelity</div>
+    </header>
+
+    <!-- START PAGE -->
+    <section id="start" class="card">
+      <h2>Selamat Datang</h2>
+      <p class="small">Aplikasi self order, mesan gak lagi ribet.</p>
+      <!-- <div class="center"><button onclick="go('menu')">Mulai Pesan</button></div> -->
+
+      <div class="col center">
+        <button onclick="go('menu')">Mulai Pesan</button>
+        <button onclick="go('status')">Cek Status Pesanan</button>
+      </div>
+    </section>
+
+    <!-- MENU PAGE -->
+    <section id="menu" class="card hidden">
+      <h2>Pilih Pesanan</h2>
+      <div class="row">
+        <div class="col">
+          <div style="margin-top:12px">
+            <div class="menu-item">
+              <div>
+                <!-- <div class="ghost" style="margin-bottom:12px;">Foto Produk</div> -->
+                <div><strong>Nasi Goreng</strong></div>
+                <div class="small">Rp 18.000</div>
+              </div>
+              <div><button onclick="addItem('Nasi Goreng',18000)">Tambah (+)</button></div>
+            </div>
+            <div class="menu-item">
+              <div>
+                <!-- <div class="ghost" style="margin-bottom:12px;">Foto Produk</div> -->
+                <div><strong>Mie Ayam</strong></div>
+                <div class="small">Rp 15.000</div>
+              </div>
+              <div><button onclick="addItem('Mie Ayam',15000)">Tambah (+)</button></div>
+            </div>
+            <div class="menu-item">
+              <div>
+                <!-- <div class="ghost" style="margin-bottom:12px;">Foto Produk</div> -->
+                <div><strong>Es Teh</strong></div>
+                <div class="small">Rp 5.000</div>
+              </div>
+              <div><button onclick="addItem('Es Teh',5000)">Tambah (+)</button></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col cart">
+          <h3>Keranjang</h3>
+          <div id="cartList" class="small">(Kosong)</div>
+          <div style="margin-top:12px">
+            <label>Nama</label>
+            <input id="custName" type="text" placeholder="Masukkan nama" style="margin-bottom:12px" />
+            <label>Nomor Meja</label>
+            <input id="tableNo" type="text" placeholder="Contoh: 05" />
+          </div>
+          <div style="margin-top:12px" class="center">
+            <button onclick="go('review')">Lanjut</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REVIEW PAGE -->
+    <section id="review" class="card hidden">
+      <h2>Review Pesanan</h2>
+      <div id="reviewList" class="small"></div>
+      <div style="margin-top:12px">Total: <strong id="totalAmt">Rp 0</strong></div>
+      <div style="margin-top:12px" class="row">
+        <div class="col"><button onclick="go('menu')">Batal</button></div>
+        <div class="col center"><button onclick="go('payment')">Lanjut ke Pembayaran</button></div>
+      </div>
+    </section>
+
+    <!-- PAYMENT PAGE -->
+    <section id="payment" class="card hidden">
+      <h2>Pilih Metode Pembayaran</h2>
+      <div class="small">
+        <label><input type="radio" name="pay" value="bank" checked /> Transfer Bank</label><br/>
+        <label><input type="radio" name="pay" value="ewallet" /> E-Wallet</label><br/>
+        <label><input type="radio" name="pay" value="qris" /> QRIS</label>
+      </div>
+      <div id="payDetail" style="margin-top:12px" class="ghost small">Pilih metode untuk melihat detail.</div>
+      <div style="margin-top:12px" class="row">
+        <div class="col"><button onclick="go('review')">Batal</button></div>
+        <div class="col center">
+          <button onclick="confirmPayment(true)">Sudah Bayar</button>
+          <!-- <button onclick="confirmPayment(false)">Belum</button> -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SUCCESS PAGE -->
+    <section id="success" class="card hidden">
+      <h2>Pesanan Diterima</h2>
+      <p class="small">Terima kasih — pesanan Anda akan segera diproses.</p>
+      <div class="row">
+        <div class="col"><button onclick="resetAll()">Pesan Lagi</button></div>
+        <div class="col center"><button onclick="go('status')">Cek Status Pesanan</button></div>
+      </div>
+    </section>
+
+    <!-- STATUS PAGE -->
+    <section id="status" class="card hidden">
+      <h2>Status Pesanan</h2>
+      <div style="margin-bottom:12px">
+        <label>Nomor Pesanan</label>
+        <input id="orderNo" type="text" placeholder="Masukkan nomor" />
+        <div style="margin-top:8px"><button onclick="checkStatus()">Cari</button></div>
+      </div>
+      <div id="statusInfo" class="small ghost hidden">
+        <!-- <div class="status-step">✅ Pesanan masuk ke dapur.</div> -->
+        <div class="status-step">🔄 Pesanan sedang diproses.</div>
+        <!-- <div class="status-step">🚚 Pesanan diantar ke meja.</div> -->
+        <!-- <div class="status-step">🎉 Pesanan selesai.</div> -->
+      </div>
+    </section>
+
+    <!-- <footer class="small center" style="margin-top:18px">(Wireframe sederhana - kotak kotak)</footer> -->
+  </div>
+
+  <script>
+    // Simple in-page navigation + tiny cart logic for demo (SMK friendly)
+    const pages=['start','menu','review','payment','success','status'];
+    const state={cart:[],orderId: null};
+
+    function go(p){ pages.forEach(id=>document.getElementById(id).classList.add('hidden')); document.getElementById(p).classList.remove('hidden'); renderCart(); }
+
+    function addItem(name,price){ const found = state.cart.find(i=>i.name===name); if(found) found.qty++; else state.cart.push({name,price,qty:1}); renderCart(); }
+    function renderCart(){ const el=document.getElementById('cartList'); if(state.cart.length===0) el.innerText='(Kosong)'; else el.innerHTML=state.cart.map(i=>`${i.name} x${i.qty} — Rp ${i.price*i.qty}`).join('<br>');
+      const total = state.cart.reduce((s,i)=>s+i.price*i.qty,0); document.getElementById('totalAmt') && (document.getElementById('totalAmt').innerText='Rp '+total);
+      document.getElementById('reviewList') && (document.getElementById('reviewList').innerHTML = state.cart.length? state.cart.map(i=>`<div>${i.name} — ${i.qty} x Rp ${i.price} = Rp ${i.price*i.qty}</div>`).join('') : '(Tidak ada item)'); }
+
+    // payment detail quick display
+    document.querySelectorAll('input[name="pay"]').forEach(r=>r.addEventListener('change',e=>{
+      const val=e.target.value; const d=document.getElementById('payDetail'); if(val==='bank') d.innerText='No Rek: 123-456-789 (BCA)';
+      if(val==='ewallet') d.innerText='E-Wallet: 0821-xxxx'; if(val==='qris') d.innerText='Tunjukkan QRIS di layar.';
+    }));
+
+    function confirmPayment(didPay){ if(!didPay){ alert('Silakan selesaikan pembayaran.'); return; } state.orderId = 'ORD'+Math.floor(Math.random()*9000+1000); go('success'); }
+    function resetAll(){ state.cart=[]; state.orderId=null; document.getElementById('custName').value=''; document.getElementById('tableNo').value=''; go('start'); }
+    function checkStatus(){ const id=document.getElementById('orderNo').value||state.orderId; if(!id){ alert('Masukkan nomor pesanan atau pesan dulu.'); return; } document.getElementById('statusInfo').classList.remove('hidden'); }
+
+    // initial
+    go('start');
+  </script>
+</body>
+</html>
