@@ -17,7 +17,7 @@
     <div class="container py-5">
       <h4 class="mb-4">Cek Status Pesanan</h4>
 
-      <div class="card shadow-sm mb-4">
+      <div id="filterStatus" class="card shadow-sm mb-4">
         <div class="card-body">
           <label for="tableNo" class="form-label">Nomor Meja</label>
           <input id="tableNo" type="text" class="form-control mb-3" placeholder="Masukkan nomor meja (contoh: 5)">
@@ -56,6 +56,7 @@
       function checkStatus() {
         const tableNo = document.getElementById('tableNo').value.trim();
         const statusInfo = document.getElementById('statusInfo');
+        const filterStatus = document.getElementById('filterStatus');
         const statusComplete = document.getElementById('statusComplete');
 
         if (!tableNo) {
@@ -63,6 +64,7 @@
           return;
         }
 
+        filterStatus.classList.add('d-none');
         statusInfo.classList.remove('d-none');
         statusComplete.classList.add('d-none');
 
