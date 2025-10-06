@@ -8,7 +8,7 @@ ERD ini dibuat sesederhana mungkin agar mudah dipahami oleh siswa SMK. Berdasark
 
 ### 🏠 Entitas Utama
 
-#### 1. **Menu**
+#### 1. **menu**
 
 | Field     | Tipe Data | Keterangan                  |
 | --------- | --------- | --------------------------- |
@@ -18,7 +18,7 @@ ERD ini dibuat sesederhana mungkin agar mudah dipahami oleh siswa SMK. Berdasark
 
 ---
 
-#### 2. **Pesanan**
+#### 2. **pesanan**
 
 | Field          | Tipe Data                                   | Keterangan             |
 | -------------- | ------------------------------------------- | ---------------------- |
@@ -31,7 +31,7 @@ ERD ini dibuat sesederhana mungkin agar mudah dipahami oleh siswa SMK. Berdasark
 
 ---
 
-#### 3. **Detail Pesanan**
+#### 3. **detail_pesanan**
 
 | Field      | Tipe Data | Keterangan                            |
 | ---------- | --------- | ------------------------------------- |
@@ -43,7 +43,7 @@ ERD ini dibuat sesederhana mungkin agar mudah dipahami oleh siswa SMK. Berdasark
 
 ---
 
-#### 4. **Pembayaran**
+#### 4. **pembayaran**
 
 | Field         | Tipe Data                          | Keterangan                            |
 | ------------- | ---------------------------------- | ------------------------------------- |
@@ -54,7 +54,7 @@ ERD ini dibuat sesederhana mungkin agar mudah dipahami oleh siswa SMK. Berdasark
 
 ---
 
-#### 5. **User (Dapur/Waitress)**
+#### 5. **user**
 
 | Field    | Tipe Data                        | Keterangan                |
 | -------- | -------------------------------- | ------------------------- |
