@@ -19,8 +19,8 @@
 
       <div class="card shadow-sm mb-4">
         <div class="card-body">
-          <label for="orderNo" class="form-label">Nomor Pesanan</label>
-          <input id="orderNo" type="text" class="form-control mb-3" placeholder="Masukkan nomor pesanan (contoh: ORD1234)">
+          <label for="tableNo" class="form-label">Nomor Meja</label>
+          <input id="tableNo" type="text" class="form-control mb-3" placeholder="Masukkan nomor meja (contoh: 5)">
           <div class="d-grid">
             <button class="btn btn-dark" onclick="checkStatus()">Cari</button>
           </div>
@@ -54,12 +54,12 @@
 
     <script>
       function checkStatus() {
-        const orderNo = document.getElementById('orderNo').value.trim();
+        const tableNo = document.getElementById('tableNo').value.trim();
         const statusInfo = document.getElementById('statusInfo');
         const statusComplete = document.getElementById('statusComplete');
 
-        if (!orderNo) {
-          alert('Masukkan nomor pesanan terlebih dahulu.');
+        if (!tableNo) {
+          alert('Masukkan nomor meja terlebih dahulu.');
           return;
         }
 
